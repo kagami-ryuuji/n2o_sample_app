@@ -1,0 +1,64 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Comics</title>
+</head>
+<body>
+  <header>
+    The header
+  </header>
+  <div class="container">
+    <div id="view" class="row">
+    </div>
+  </div>
+  <footer>
+    The footer
+  </footer>
+<style>
+.to_user {
+  color: #008080;
+  font-weight: bold;
+}
+.sidebar a {
+  display: block;
+}
+</style>
+<link type="text/css" rel="stylesheet" href="/static/css/kuroneko.css">
+<script type="text/javascript">
+  var url;
+  document.addEventListener('click', function (e) {
+    if (undefined !== e.target.href) {
+      url = e.target.href;
+      var matches = /^http\:\/\/localhost:8000(?:\/)?(.*)(?:\/)?$/.exec(url);
+      if (null !== matches && "" !== matches[1]) {
+        var path = matches[1];
+        if (null !== (matches = /^(\w+)$/.exec(path))) {
+          var name = matches[1];
+          ws.send(enc(tuple(atom('client'), tuple(atom('show'), atom(name)))));
+          window.history.pushState({ page: name }, '', url);
+        }
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }
+  });
+  window.onpopstate = function (e) {
+    console.log(e.state);
+  }
+</script>
+<!--script>var transition = {pid: '', host: 'localhost', port:'8000'};</script-->
+<script>{{script}}</script>
+<script src='/n2o/protocols/bert.js'></script>
+<script src='/n2o/protocols/client.js'></script>
+<script src='/n2o/protocols/nitrogen.js'></script>
+<script src='/n2o/bullet.js'></script>
+<script src='/n2o/xhr.js'></script>
+<script src='/n2o/utf8.js'></script>
+<script src='/n2o/template.js'></script>
+<script src='/n2o/n2o.js'></script>
+<script src='/n2o/validation.js'></script>
+<script src='/n2o/ftp.js'></script>
+<!--script src='https://synrc.com/hi.js'></script-->
+<script>protos = [$client,$bert]; N2O_start();</script>
+</body>
+</html>
