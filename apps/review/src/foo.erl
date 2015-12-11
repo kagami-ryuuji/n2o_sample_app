@@ -7,6 +7,10 @@ view() ->
   #panel {
     body=[
       #h1 { body = <<"Foo: Begin">> },
-      #link { url = "/bar", body="Forward to Bar" }
+      #button { id=baz, postback={show, baz}, body= <<"Gallery list">> },
+      #button { id=bar, postback={show, bar}, body= <<"Bar">> }
     ]
   }.
+
+push_state() ->
+  "window.history.pushState({page: 'foo'}, '', '/foo');".

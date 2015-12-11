@@ -8,25 +8,21 @@ main() ->
   #dtl{file="layout", app=review}.
 
 event(init) ->
-  wf:update(view, make_view(#panel {
-    body=[
-      #h1 { body = <<"Galleries">> },
-      #link { url = "/foo", body="Foo" },
-      #link { url = "/bar", body="Bar" }
-    ]
-  }));
+  wf:update(view, render(baz));
 
-event({client, {show, foo}}) ->
-  View = make_view(foo:view()),
-  wf:update(view, wf:render(View));
+event({show, baz}) ->
+  wf:update(view, render(baz));
 
-event({client, {show, bar}}) ->
-  View = make_view(bar:view()),
-  wf:update(view, wf:render(View));
+event({show, foo}) ->
+  wf:update(view, render(foo));
+
+event({show, bar}) ->
+  wf:update(view, render(bar));
 
 event(Event) ->
   io:format("Unknown event: ~p~n", [Event]),
-  wf:update(view, make_view(#h1{ body = <<"Kretin">> })).
+  wf:update(view, #h1{ body = <<"Kretin">> }).
 
-make_view(View) ->
-  #panel { id=view, body = View }.
+render(View) ->
+  wf:wire(View:push_state()),
+  #panel { id=view, class=[row], body = View:view() }.
