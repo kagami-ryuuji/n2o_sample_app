@@ -8,21 +8,21 @@ main() ->
   #dtl{file="layout", app=review}.
 
 event(init) ->
-  wf:update(view, render(baz));
+  render(baz);
 
 event({show, baz}) ->
-  wf:update(view, render(baz));
+  render(baz);
 
 event({show, foo}) ->
-  wf:update(view, render(foo));
+  render(foo);
 
 event({show, bar}) ->
-  wf:update(view, render(bar));
+  render(bar);
 
 event(Event) ->
   io:format("Unknown event: ~p~n", [Event]),
-  wf:update(view, #h1{ body = <<"Kretin">> }).
+  wf:update(view, #h1{ body = <<"Reload page please">> }).
 
 render(View) ->
   wf:wire(View:push_state()),
-  #panel { id=view, class=[row], body = View:view() }.
+  wf:update(view, #panel { id=view, class=[row], body = View:view() }).
